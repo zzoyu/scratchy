@@ -2,7 +2,7 @@
 
 Fully vibe-coded toy project.
 
-[PLAN](plan.md)
+[PLAN](PLAN.md)
 
 ## Sample
 
