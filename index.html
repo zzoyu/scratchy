@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+    <meta name="description" content="나만의 메시지를 담은 모바일 가상 스크래치 카드를 만들고 공유해보세요. 사각사각 긁는 햅틱 피드백을 경험해보세요." />
+    
+    <!-- SEO & Web App OpenGraph -->
+    <meta property="og:title" content="긁? / Scratchy - 모바일 가상 스크래치 카드" />
+    <meta property="og:description" content="손가락으로 은색 복권을 긁어 메시지를 확인하세요! 햅틱 진동과 물리 이펙트가 제공됩니다." />
+    <meta property="og:type" content="website" />
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Outfit:wght@400;600;800&family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
+    
+    <title>긁?</title>
+  </head>
+  <body>
+    <div id="app">
+      <!-- 메인 헤더 -->
+      <header class="app-header">
+        <h1 class="logo-title">긁?</h1>
+        <p class="subtitle" id="view-subtitle">메시지가 숨겨진 티켓을 긁어보세요!</p>
+      </header>
+
+      <!-- 메인 콘텐츠 영역 -->
+      <main class="app-content">
+        <!-- 1. 플레이 뷰 (스크래치 티켓 화면) -->
+        <section id="play-view" class="view-section active">
+          <div class="ticket-wrapper">
+            <div class="ticket-card" id="scratch-ticket">
+              <!-- 스크래치 밑의 실제 당첨 메시지 영역 -->
+              <div class="ticket-content">
+                <div class="prize-label">SECRET MESSAGE</div>
+                <div class="prize-text" id="target-message">안녕!</div>
+              </div>
+              <!-- 위에 덮이는 Canvas 은박 레이어 -->
+              <canvas id="scratch-canvas" class="scratch-canvas"></canvas>
+              <!-- 긁기 가루 파티클을 담을 컨테이너 -->
+              <div id="particle-container" class="particle-container"></div>
+            </div>
+          </div>
+          
+          <!-- 스크래칭 가이드 및 햅틱 안내 -->
+          <div class="scratch-guide" id="scratch-guide">
+            <span class="guide-icon">✨</span>
+            <span class="guide-text">손가락으로 슥슥 긁어서 지워주세요!</span>
+          </div>
+
+          <!-- 완료 후 피드백 및 다음 행동 영역 (숨김 처리됨) -->
+          <div id="action-area" class="action-area fade-in-hidden">
+            <button id="btn-create-mode" class="btn btn-primary" type="button">
+              나도 나만의 스크래치 티켓 만들기 ✍️
+            </button>
+            <button id="btn-reset-ticket" class="btn btn-secondary" type="button">
+              다시 긁기 🔄
+            </button>
+          </div>
+        </section>
+
+        <!-- 2. 생성 뷰 (커스텀 티켓 작성 화면) -->
+        <section id="create-view" class="view-section">
+          <div class="form-container glass-panel">
+            <h2 class="form-title">나만의 스크래치 티켓 만들기</h2>
+            <p class="form-desc">친구에게 전달할 비밀 문구를 입력하세요. (최대 16자)</p>
+            
+            <div class="input-group">
+              <input type="text" id="message-input" placeholder="여기에 비밀 메시지를 입력하세요" maxlength="16" autocomplete="off" />
+              <div class="char-counter"><span id="char-count">0</span> / 16</div>
+            </div>
+            
+            <div class="btn-group">
+              <button id="btn-generate" class="btn btn-primary btn-full" type="button">공유 링크 생성하기 🔗</button>
+              <button id="btn-back-to-play" class="btn btn-secondary btn-full" type="button">돌아가기 ↩️</button>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <!-- 공유 결과 알림 모달 -->
+      <div id="share-modal" class="modal-overlay">
+        <div class="modal-content glass-panel">
+          <h3 class="modal-title">🎉 링크가 준비되었습니다!</h3>
+          <p class="modal-desc">아래의 링크를 복사하여 친구들에게 공유해보세요.</p>
+          
+          <div class="link-box">
+            <input type="text" id="share-url-input" readonly />
+            <button id="btn-copy-url" class="btn btn-accent" type="button">복사</button>
+          </div>
+          
+          <button id="btn-close-modal" class="btn btn-secondary btn-full" type="button">닫기</button>
+        </div>
+      </div>
+
+      <!-- 백그라운드 Confetti 캔버스 -->
+      <canvas id="confetti-canvas" class="confetti-canvas"></canvas>
+
+      <!-- 푸터 -->
+      <footer class="app-footer">
+        <p>© 2026 긁 (Scratchy).</p>
+      </footer>
+    </div>
+    
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
